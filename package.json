@@ -1,0 +1,34 @@
+{
+  "name": "nodemjs",
+  "version": "0.1.0",
+  "description": "Run .mjs files from your command line, with all the tweaks from esmod-pmb.",
+  "keywords": [],
+  "author": "M.K. (https://github.com/mk-pmb)",
+  "homepage": "https://github.com/mk-pmb/nodemjs-node/#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mk-pmb/nodemjs-node.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mk-pmb/nodemjs-node/issues"
+  },
+  "contributors": [],
+  "private": false,
+  "license": "ISC",
+  "main": "nodemjs.js",
+  "bin": "bin/nodemjs.sh",
+  "scripts": {
+    "test": "./test/uc1st.mjs"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "esmod-pmb": "^0.1.7"
+  },
+  "devDependencies": {
+    "lodash.upperfirst": "^4.3.1",
+    "p-fatal": "^0.1.1"
+  },
+  "npm vs. BOM = Unexpected token": "-*- coding: UTF-8 -*-"
+}
