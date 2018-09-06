@@ -27,7 +27,11 @@ async function stage2(loaderArgs, mjsFile) {
   const cliMain = (mainMod[mainProp]
     || (mainMod.default || false)[mainProp]);
   if (typeof cliMain === 'function') {
-    return cliMain.apply(meta, meta.cliArgs);
+    try {
+      return await cliMain.apply(meta, meta.cliArgs);
+    } catch (err) {
+      setImmediate(() => { throw err; });
+    }
   }
 }
 
