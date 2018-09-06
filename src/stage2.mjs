@@ -23,7 +23,9 @@ async function stage2(loaderArgs, mjsFile) {
   if (mjsFile === undefined) { return startRepl(); }
 
   const mainMod = await importWithLegacyFallback(mjsFile);
-  const cliMain = (mainMod.nodemjsCliMain || mainMod.default.nodemjsCliMain);
+  const mainProp = 'nodemjsCliMain';
+  const cliMain = (mainMod[mainProp]
+    || (mainMod.default || false)[mainProp]);
   if (typeof cliMain === 'function') {
     return cliMain.apply(meta, meta.cliArgs);
   }
