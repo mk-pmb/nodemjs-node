@@ -13,6 +13,4 @@ async function main(...input) {
   console.log('uc1st:', arr);
 }
 
-const [, scriptFile, ...args] = process.argv;
-console.log({ scriptFile });
-main(...args);
+export default { nodemjsCliMain: main };

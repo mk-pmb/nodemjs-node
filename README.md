@@ -93,12 +93,20 @@ Known issues
   per module, so this won't matter
   — unless you use cache-busting modules, in which case you're on your own.
 
+* __REPL:__
+  The REPL isn't upgraded to ESM because `esm` currently
+  [cannot expose its REPL in a clean and easy way][esm-issue-592].
+
+* The `invokedAs` context property for `nodemjsCliMain` doesn't work.
+
 * Needs more/better __tests and docs__.
 
 
 
 
 &nbsp;
+
+  [esm-issue-592]: https://github.com/standard-things/esm/issues/592
 
 
 License

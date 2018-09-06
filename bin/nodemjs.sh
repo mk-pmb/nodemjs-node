@@ -5,9 +5,9 @@
 function nodemjs () {
   local PKGDIR="$(readlink -m "$BASH_SOURCE"/../..)"
   local ARG=
-  local EXEC=( exec )
+  local EXEC_AS="$0"
   if [ "$1" == -a ]; then
-    EXEC+=( "$1" "$2" )
+    EXEC_AS="$2"
     shift 2
   fi
   local KEEP=() GRAB=()
@@ -23,14 +23,20 @@ function nodemjs () {
 
   while [ "$#" -ge 1 ]; do
     case "$1" in
-      -r ) GRAB+=( "r:$2" ); shift 2;;
+      -e | -r | -p ) GRAB+=( "${1#-}:$2" ); shift 2;;
       -- ) break;;
       -* ) KEEP+=( "$1" ); shift;;
       * ) break;;
     esac
   done
-  "${EXEC[@]}" nodejs "${KEEP[@]}" "$PKGDIR"/esldr.js "${GRAB[@]}" : "$@"
-  return $?
+  local NODE_CMD=(
+    exec -a "$EXEC_AS"
+    nodejs
+    "${KEEP[@]}"
+    "$PKGDIR"/esldr.js
+    "${GRAB[@]}" :
+    "$@" )
+  "${NODE_CMD[@]}"; return $?
 }
 
 
