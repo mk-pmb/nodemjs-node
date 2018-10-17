@@ -4,8 +4,11 @@ import repl from 'repl';
 import pEachSeries from 'p-each-series';
 import pEval from 'p-eval';
 
-import importWithLegacyFallback from './importWithLegacyFallback';
+import makeImporterWithLegacyFallback from './importWithLegacyFallback';
 import meta from '../meta';
+
+
+const importWithLegacyFallback = makeImporterWithLegacyFallback();
 
 
 function startRepl() {
@@ -17,7 +20,8 @@ function startRepl() {
   });
 }
 
-async function stage2(loaderArgs, mjsFile) {
+async function stage2(legacyRequire, loaderArgs, mjsFile) {
+  importWithLegacyFallback.legacyResolve = legacyRequire.resolve;
   await pEachSeries(loaderArgs, stage2.handleLoaderArg);
   if (mjsFile === null) { return startRepl(); }
   if (mjsFile === undefined) { return startRepl(); }

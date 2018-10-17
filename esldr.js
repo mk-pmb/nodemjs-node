@@ -37,4 +37,4 @@ function rethrowSoon(err) {
   function rethrowNow() { throw err; }
   setImmediate(rethrowNow);
 }
-stage2(loaderArgs, mjsFile).then(null, rethrowSoon);
+stage2(require, loaderArgs, mjsFile).then(null, rethrowSoon);
