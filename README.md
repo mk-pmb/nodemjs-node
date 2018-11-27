@@ -72,6 +72,19 @@ $ ./test/dynamicMap.mjs rot-13 '' foo bar qux
 <!--#toc stop="scan" -->
 
 
+Setup
+-----
+
+1. `npm install --global nodemjs`
+1. Make sure you have a node.js (compatible) binary available as the
+   `nodejs` command. If you use sane package sources, you probably do.
+   If you don't, just make a symlink `nodejs` to `node` or whatever
+   it's called on your system.
+   <br><small>(If you'd like to argue the supremacy of the more generic `node`
+   command name, file an issue, ideally after you've renamed the
+   Node.js foundation to Node foundation.)</small>
+
+
 
 Known issues
 ------------
