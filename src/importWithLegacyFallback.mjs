@@ -15,11 +15,11 @@ function makeImporter() {
           return import(legDetect);
         }
         err.message = `Submodule import error while trying to import ${
-          spec}: ${err.message}`
+          spec}: ${err.message}`;
       }
       throw err;
     }
-  }
+  };
   return imp;
 }
 
