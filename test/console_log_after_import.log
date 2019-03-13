@@ -1,0 +1,27 @@
+### running via -r esm always works:
+
+$ nodejs -r esm console_log_after_import.mjs
+11
+{ foo: 'bar' }
+22
+
+
+### first nodemjs run after the -r esm run:
+
+$ nodemjs console_log_after_import.mjs
+file:///mnt/…/node_modules/nodemjs/test/console_log_after_import.mjs:3
+import urlLib from 'url';
+^^^^^^
+
+SyntaxError: Unexpected token import
+
+### all consecutive nodemjs runs until next -r esm run:
+
+$ nodemjs console_log_after_import.mjs
+11
+file:///mnt/…/node_modules/nodemjs/test/console_log_after_import.mjs:1
+TypeError: Cannot read property 'options' of null
+    at formatValue (util.js:399:38)
+    at inspect (util.js:293:10)
+    at format (util.js:160:12)
+    at Object.log (console.js:130:21)
