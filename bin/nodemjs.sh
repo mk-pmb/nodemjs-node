@@ -3,7 +3,11 @@
 
 
 function nodemjs () {
-  local PKGDIR="$(readlink -m "$BASH_SOURCE"/../..)"
+  # local PKGDIR="$(readlink -m "$BASH_SOURCE"/../..)"
+  # ^-- 2019-03-14: doesn't work on MacOS as they use BSD readline, not GNU's
+  [ -n "$NODEJS_CMD" ] || local NODEJS_CMD='nodejs'
+  local PKGDIR="$(BS="$BASH_SOURCE" nodejs -p '
+    path.dirname(path.dirname(fs.realpathSync(process.env.BS)))')"
   local ARG=
   local EXEC_AS="$0"
   if [ "$1" == -a ]; then
@@ -31,7 +35,7 @@ function nodemjs () {
   done
   local NODE_CMD=(
     exec -a "$EXEC_AS"
-    nodejs
+    "$NODEJS_CMD"
     "${KEEP[@]}"
     "$PKGDIR"/esldr.js
     "${GRAB[@]}" :

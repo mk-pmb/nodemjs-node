@@ -83,6 +83,8 @@ Setup
    <br><small>(If you'd like to argue the supremacy of the more generic `node`
    command name, file an issue, ideally after you've renamed the
    Node.js foundation to Node foundation.)</small>
+   <br><small>As of 0.1.7, you can configure your favorite `nodejs` replacement
+   via the `NODEJS_CMD` env var.</small>
 
 
 
