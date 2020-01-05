@@ -17,6 +17,13 @@ function makeImporter() {
         err.message = `Submodule import error while trying to import ${
           spec}: ${err.message}`;
       }
+      const origMsg = String(err.message || '');
+      if (origMsg.startsWith('Cannot load module from .mjs:')) {
+        if (origMsg.endsWith('.js')) {
+          err.message += ' (Should that file be named *.mjs?)';
+        }
+      }
+      err.stack += '\n' + (new Error('via nodemjs import failure')).stack;
       throw err;
     }
   };

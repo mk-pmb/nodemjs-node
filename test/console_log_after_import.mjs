@@ -1,6 +1,9 @@
 // -*- coding: utf-8, tab-width: 2 -*-
 
-import urlLib from 'url';
+// import urlLib from 'url';
+
+console.log(process.pid);
+setTimeout(String, 5e4);
 
 console.log(11);
 console.log({ foo: 'bar' });
@@ -15,4 +18,4 @@ console.log({ foo: 'bar' });
 
 console.log(22);
 
-String('ignore', urlLib);
+String('ignore', typeof urlLib);
