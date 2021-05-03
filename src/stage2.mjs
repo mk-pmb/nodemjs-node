@@ -1,7 +1,7 @@
 // -*- coding: utf-8, tab-width: 2 -*-
 
 import repl from 'repl';
-import pEachSeries from 'p-each-series';
+import pEachSeries from 'p-each-series-cjs';
 import pEval from 'p-eval';
 
 import makeImporterWithLegacyFallback from './importWithLegacyFallback';
