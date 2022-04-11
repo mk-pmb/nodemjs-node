@@ -10,6 +10,8 @@ import meta from '../meta';
 
 const importWithLegacyFallback = makeImporterWithLegacyFallback();
 
+const hadColonCmds = {};
+
 
 function startRepl() {
   const r = repl.start();
@@ -23,8 +25,11 @@ function startRepl() {
 async function stage2(legacyRequire, loaderArgs, mjsFile) {
   importWithLegacyFallback.legacyResolve = legacyRequire.resolve;
   await pEachSeries(loaderArgs, stage2.handleLoaderArg);
-  if (mjsFile === null) { return startRepl(); }
-  if (mjsFile === undefined) { return startRepl(); }
+  if ((mjsFile === null) || (mjsFile === undefined)) {
+    if (hadColonCmds.e) { return; }
+    if (hadColonCmds.p) { return; }
+    return startRepl();
+  }
 
   const mainMod = await importWithLegacyFallback(mjsFile);
   const mainProp = 'nodemjsCliMain';
@@ -49,6 +54,7 @@ stage2.handleLoaderArg = (arg) => {
   const colon = /^(\w+):/.exec(arg);
   if (colon) {
     const [, cmd] = colon;
+    hadColonCmds[cmd] = true;
     const param = arg.slice(colon[0].length);
     const func = colonCmds[cmd];
     if (func) { return func(param); }
