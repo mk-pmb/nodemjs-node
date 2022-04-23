@@ -5,19 +5,22 @@
 function nodemjs () {
   [ -n "$NODEJS_CMD" ] || local NODEJS_CMD='nodejs'
 
-  # local PKGDIR="$(readlink -m "$BASH_SOURCE"/../..)"
-  # ^-- 2019-03-14: doesn't work on MacOS as they use BSD readline, not GNU's
-  local PKGDIR="$(BS="$BASH_SOURCE" nodejs -p '
-    path.dirname(path.dirname(fs.realpathSync(process.env.BS)))')"
+  local SELFFILE="$(readlink -f -- "$BASH_SOURCE")"
+  # ^-- Use -f because that usually works even with crippled versions of
+  #     readlink like on MacOS X or busybox.
+  local PKGDIR="$(dirname -- "$(dirname -- "$SELFFILE")")"
 
   local ARG=
   local EXEC_AS="$0"
-  if [ "$1" == -a ]; then
-    EXEC_AS="$2"
-    shift 2
-  fi
-  local KEEP=() GRAB=()
+  case "$#:$1" in
+    1:--report-path=bin ) echo "$SELFFILE"; return $?;;
+    1:--report-path=pkg ) echo "$PKGDIR"; return $?;;
+    *:-a )
+      EXEC_AS="$2"
+      shift 2;;
+  esac
 
+  local KEEP=() GRAB=()
   local NPM_BIN="$(type -p npm)"
   if [ -x "$NPM_BIN" ]; then
     local NPMCFG_PRELOAD="$(npm config get nodemjs-preload)"
