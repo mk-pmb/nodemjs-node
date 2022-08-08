@@ -1,5 +1,5 @@
 { "name": "nodemjs",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Run .mjs files from your command line, with all the tweaks from esmod-pmb.",
   "keywords": [],
 
@@ -16,7 +16,7 @@
 
   "private": false, "license": "ISC",
 
-  "main": "nodemjs.js",
+  "main": "esldr.js",
   "bin": "bin/nodemjs.sh",
   "scripts": { "test": "./test/uc1st.mjs" },
   "directories": { "test": "test" },
