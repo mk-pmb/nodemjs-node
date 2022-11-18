@@ -1,5 +1,5 @@
 { "name": "nodemjs",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Run .mjs files from your command line, with all the tweaks from esmod-pmb.",
   "keywords": [],
 

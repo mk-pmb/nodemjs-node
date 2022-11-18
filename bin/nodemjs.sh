@@ -3,7 +3,12 @@
 
 
 function nodemjs () {
-  [ -n "$NODEJS_CMD" ] || local NODEJS_CMD='nodejs'
+  if [ -z "$NODEJS_CMD" ]; then
+    local NODEJS_CMD=
+    for NODEJS_CMD in node{js,,js}; do
+      which "$NODEJS_CMD" 2>/dev/null | grep -qPe '^/' && break
+    done
+  fi
 
   local SELFFILE="$(readlink -f -- "$BASH_SOURCE")"
   # ^-- Use -f because that usually works even with crippled versions of
