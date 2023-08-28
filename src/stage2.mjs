@@ -37,9 +37,15 @@ async function stage2(legacyRequire, loaderArgs, mjsFile) {
     || (mainMod.default || false)[mainProp]);
   if (typeof cliMain === 'function') {
     try {
-      return await cliMain.apply(meta, meta.cliArgs);
+      await cliMain.apply(meta, meta.cliArgs);
     } catch (err) {
-      setImmediate(() => { throw err; });
+      /* We delay the failure in order to allow node.js to still print any
+        console.debug() output that might have been enqueued just before
+        the error was thrown. Promises rejections are to be treated async
+        anyway, so there should be no (additional) harm in delaying it
+        a tiny bit further.
+      */
+      setImmediate(() => stage2.cliMainFailed(err));
     }
   }
 }
@@ -60,6 +66,44 @@ stage2.handleLoaderArg = (arg) => {
     if (func) { return func(param); }
   }
   throw new Error('Unsupported loader argument: ' + arg);
+};
+
+
+stage2.cliMainFailed = (err) => {
+  // throw err;
+  /* ^-- Originally, we had just rethrown, but in Node.js v16, this would
+    clutter the error log (and especially a terminal) with useless spam like
+
+      [Symbol(originalCallSite)]: [
+        CallSite {},
+        CallSite {},
+        CallSite {},
+        CallSite {},
+        CallSite {},
+        CallSite {},
+        CallSite {},
+        CallSite {}
+      ],
+      [Symbol(mutatedCallSite)]: [
+        CallSite {},
+        CallSite {},
+        CallSite {},
+        CallSite {},
+        CallSite {},
+        CallSite {},
+        CallSite {},
+        CallSite {}
+      ]
+
+    I tried to
+      delete err[Symbol.for('originalCallSite');
+      delete err[Symbol.for('mutatedCallSite');
+    but that had no effect.
+    Thus, for now, we'll have to print and then exit forcefully:
+  */
+
+  console.error(err.stack);
+  process.exit(2);
 };
 
 
