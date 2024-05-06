@@ -26,6 +26,10 @@ function nodemjs () {
   esac
 
   local KEEP=() GRAB=()
+
+  ARG="$NODEJS_HEAP_MAX_MB"
+  [ "${ARG:-0}" -ge 1 ] && KEEP+=( --max-old-space-size="$ARG" )
+
   local NPM_BIN="$(type -p npm)"
   if [ -x "$NPM_BIN" ]; then
     local NPMCFG_PRELOAD="$(npm config get nodemjs-preload)"

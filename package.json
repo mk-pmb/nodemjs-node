@@ -1,5 +1,5 @@
 { "name": "nodemjs",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Run .mjs files from your command line, with all the tweaks from esmod-pmb.",
   "keywords": [],
 
@@ -22,13 +22,13 @@
   "directories": { "test": "test" },
 
   "dependencies": {
-    "esmod-pmb": "^0.1.11",
+    "esmod-pmb": "^0.1.13",
     "p-each-series-cjs": "^2.2.0",
     "p-eval": "^0.1.0"
   },
   "devDependencies": {
     "lodash.upperfirst": "^4.3.1",
-    "p-fatal": "^0.1.3"
+    "p-fatal": "^0.1.5"
   },
 
 
