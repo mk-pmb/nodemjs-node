@@ -10,7 +10,7 @@ async function main() {
   }
   let lib;
   try {
-    lib = (await importWithLegacyFallback(libSpec)).default;
+    lib = (await importWithLegacyFallback()(libSpec)).default;
   } catch (err) {
     console.error('dynamicMap: import failed for:', libSpec);
     throw err;
