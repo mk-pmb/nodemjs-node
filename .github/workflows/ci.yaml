@@ -19,7 +19,9 @@ jobs:
         with:
           nodejs_version: 19
       - run: ghciu npm install .
-      - run: ghciu npm link
+      - run: ghciu npm install --global typescript
       - run: ghciu npm test
+        env:
+          JS_INTERP: 'tsc'
 
 ...
