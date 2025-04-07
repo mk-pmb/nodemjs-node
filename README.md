@@ -35,33 +35,6 @@ uc1st: [ 'Using dummy input', 'Because there were', 'No CLI args' ]
 
 $ ./test/uc1st.mjs foo bar qux
 uc1st: [ 'Foo', 'Bar', 'Qux' ]
-
-$ ./test/dynamicMap.mjs rot-13 '' foo bar qux ; echo rv=$?
-dynamicMap: import failed for: rot-13
-(node:11549) UnhandledPromiseRejectionWarning: Error: Cannot find module 'rot-13'
-    at […]
-(node:11549) [DEP0018] DeprecationWarning: Unhandled promise rejections are
-    deprecated. In the future, promise rejections […] terminate […] Node.js […]
-rv=0
-
-# Fortunately, you can just pre-import the future with -r:
-$ nodemjs -r p-fatal test/dynamicMap.mjs rot-13 '' foo bar qux ; echo rv=$?
-dynamicMap: import failed for: rot-13
-Error: Cannot find module 'rot-13'
-    at […]
-rv=1
-
-# … or via the env var:
-$ export NODEMJS_PRELOAD='p-fatal'
-$ ./test/dynamicMap.mjs rot-13 '' foo bar qux ; echo rv=$?
-dynamicMap: import failed for: rot-13
-Error: Cannot find module 'rot-13'
-    at […]
-rv=1
-
-# and once you've installed it…
-$ ./test/dynamicMap.mjs rot-13 '' foo bar qux
-[ 'sbb', 'one', 'dhk' ]
 ```
 
 
