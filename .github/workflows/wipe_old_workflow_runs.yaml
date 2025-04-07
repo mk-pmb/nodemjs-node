@@ -1,0 +1,26 @@
+%YAML 1.1
+# ^-- ATTN: [2019-12-31] If you use a later version, Github will fail
+#   with a bogus error message "You have an error in your yaml syntax".
+# -*- coding: UTF-8, tab-width: 2 -*-
+---
+
+name: '🗑 Wipe old workflow runs manually on demand'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  wipe_old_workflows:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+
+      - uses: mk-pmb/github-ci-util-2405-pmb/act/purge-old-workflow-runs@v1
+        with:
+          api_token: '${{ github.token }}'
+          older_than: '10 seconds ago'
+
+
+
+...
