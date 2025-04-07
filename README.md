@@ -31,11 +31,9 @@ CLI
 
 ```text
 $ nodemjs test/uc1st.mjs
-{ scriptFile: '/mnt/…/nodemjs/test/uc1st.mjs' }
 uc1st: [ 'Using dummy input', 'Because there were', 'No CLI args' ]
 
 $ ./test/uc1st.mjs foo bar qux
-{ scriptFile: '/mnt/…/nodemjs/test/uc1st.mjs' }
 uc1st: [ 'Foo', 'Bar', 'Qux' ]
 
 $ ./test/dynamicMap.mjs rot-13 '' foo bar qux ; echo rv=$?
