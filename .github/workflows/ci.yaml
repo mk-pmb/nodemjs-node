@@ -16,10 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: mk-pmb/github-ci-util-2405-pmb/act/install@v1
+      - uses: molow/setup-node@main
+        # ^-- see https://github.com/actions/setup-node/issues/648
         with:
-          nodejs_version: 19
+          node-version: 'nightly'
       - run: ghciu npm install .
-      - run: ghciu npm link
       - run: ghciu npm test
+        env:
+          JS_INTERP: 'node'
 
 ...
