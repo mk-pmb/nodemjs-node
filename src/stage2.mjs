@@ -22,9 +22,10 @@ function startRepl() {
   });
 }
 
-async function stage2(legacyRequire, loaderArgs, mjsFile) {
+async function stage2(legacyRequire, loaderArgs) {
   importWithLegacyFallback.legacyResolve = legacyRequire.resolve;
   await pEachSeries(loaderArgs, stage2.handleLoaderArg);
+  const mjsFile = meta.mainPath;
   if ((mjsFile === null) || (mjsFile === undefined)) {
     if (hadColonCmds.e) { return; }
     if (hadColonCmds.p) { return; }

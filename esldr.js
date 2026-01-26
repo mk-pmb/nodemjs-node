@@ -2,31 +2,39 @@
 /* -*- tab-width: 2 -*- */
 'use strict';
 
-var mjsFile, mjsMod, loaderArgs,
-  pathLib = require('path'),
-  meta = require('./meta.js'),
-  esmRqr, stage2;
+const pathLib = require('path');
 
-(function parseLoaderArgs() {
-  var pa = process.argv, idx = pa.indexOf(':');
+const makeEsmRqr = require('esmod-pmb');
+
+const meta = require('./meta.js');
+
+const loaderArgs = (function parseLoaderArgs() {
+  const pa = process.argv;
+  const idx = pa.indexOf(':')
   if (idx < 0) { throw new Error('Invocation failure: missing arg ":"'); }
-  loaderArgs = pa.splice(1, idx).slice(1, -1);
-  mjsFile = (pa[1] || null);
-  if (mjsFile) { mjsFile = pathLib.resolve(mjsFile); }
-  pa[1] = mjsFile;
+
+  const evicted = pa.splice(1, idx); /* Modify process.argv inplace in order
+    to evict [loaderFileName, ...loaderArgs, colon]. */
+  evicted.shift(); // Discard the loaderFileName.
+  evicted.pop(); // Discard the colon.
+
+  meta.mainPath = (pa[1] || null);
+  meta.cliArgs = pa.slice(2);
+  meta.invokedAs = process.argv0;
+
+  if (meta.mainPath) {
+    meta.mainPath = pathLib.resolve(meta.mainPath);
+    pa[1] = meta.mainPath;
+  }
+  return evicted;
 }());
 
-esmRqr = require('esmod-pmb')(module, { reexport: false });
-Object.assign(meta, {
-  cliArgs: process.argv.slice(2),
-  esmRqr: esmRqr,
-  invokedAs: process.argv0,
-  mainPath: mjsFile,
-  process: process,
-});
+const esmRqr = makeEsmRqr(module, { reexport: false });
+meta.esmRqr = esmRqr;
+meta.process = process;
 
 (function envPreload() {
-  var pre = process.env.NODEMJS_PRELOAD;
+  const pre = process.env.NODEMJS_PRELOAD;
   if (!pre) { return; }
   pre.match(/\S+/g).forEach(esmRqr);
 }());
@@ -34,7 +42,9 @@ Object.assign(meta, {
 const stage2 = esmRqr('./src/stage2.mjs').default;
 
 function rethrowSoon(err) {
+  // Define function separate from setImmediate to keep the code snippet
+  // in node.js's error message simple and minimalistic.
   function rethrowNow() { throw err; }
   setImmediate(rethrowNow);
 }
-stage2(require, loaderArgs, mjsFile).then(null, rethrowSoon);
+stage2(require, loaderArgs).then(null, rethrowSoon);
