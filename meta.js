@@ -1,1 +1,2 @@
-﻿module.exports = {}; // yet another global namespace.
+﻿'use strict';
+module.exports = {}; // yet another global namespace.

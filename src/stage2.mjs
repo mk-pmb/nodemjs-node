@@ -103,7 +103,7 @@ stage2.cliMainFailed = (err) => {
   */
 
   console.error(err.stack);
-  process.exit(2);
+  process.exit(2); // eslint-disable-line n/no-process-exit
 };
 
 
