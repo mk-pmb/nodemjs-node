@@ -1,6 +1,6 @@
 // -*- coding: utf-8, tab-width: 2 -*-
 
-import findImportErrorLegacyPath from './findImportErrorLegacyPath';
+import findImportErrorLegacyPath from './findImportErrorLegacyPath.js';
 
 function makeImporter() {
   const imp = async function importWithLegacyFallback(spec) {
