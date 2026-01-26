@@ -4,8 +4,8 @@ import repl from 'repl';
 import pEachSeries from 'p-each-series-cjs';
 import pEval from 'p-eval';
 
-import makeImporterWithLegacyFallback from './importWithLegacyFallback';
-import meta from '../meta';
+import makeImporterWithLegacyFallback from './importWithLegacyFallback.mjs';
+import meta from '../meta.js';
 
 
 const importWithLegacyFallback = makeImporterWithLegacyFallback();

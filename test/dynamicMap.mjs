@@ -1,7 +1,7 @@
 #!/usr/bin/env nodemjs
 // -*- coding: utf-8, tab-width: 2 -*-
 
-import importWithLegacyFallback from '../src/importWithLegacyFallback';
+import importWithLegacyFallback from '../src/importWithLegacyFallback.mjs';
 
 async function main() {
   const [, , libSpec, funcName, ...args] = process.argv;

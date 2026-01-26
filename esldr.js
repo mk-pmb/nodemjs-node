@@ -4,7 +4,7 @@
 
 var mjsFile, mjsMod, loaderArgs,
   pathLib = require('path'),
-  meta = require('./meta'),
+  meta = require('./meta.js'),
   esmRqr, stage2;
 
 (function parseLoaderArgs() {
@@ -31,7 +31,7 @@ Object.assign(meta, {
   pre.match(/\S+/g).forEach(esmRqr);
 }());
 
-stage2 = esmRqr('./src/stage2').default;
+const stage2 = esmRqr('./src/stage2.mjs').default;
 
 function rethrowSoon(err) {
   function rethrowNow() { throw err; }
