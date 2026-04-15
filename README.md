@@ -18,11 +18,11 @@ Added features:
   They will be loaded even before the `-r` pre-imports.
 
 
-⚠ Incompatible with node.js v20+! ⚠
------------------------------------
+⚠ DEPRECATED ⚠
+--------------
 
-… because the upstream `esm` module is no longer maintained.
-See [issue #2](https://github.com/mk-pmb/nodemjs-node/issues/2).
+See [the `esmod-pmb` readme](https://github.com/mk-pmb/esmod-pmb-js)
+for how to use Node.js v24 instead.
 
 
 

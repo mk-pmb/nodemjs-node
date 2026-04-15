@@ -1,5 +1,5 @@
 { "name": "nodemjs",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Run .mjs files from your command line, with all the tweaks from esmod-pmb.",
   "keywords": [],
 
@@ -26,19 +26,19 @@
   },
 
   "dependencies": {
-    "esmod-pmb": "^0.1.13",
+    "esmod-pmb": "^0.1.15",
     "p-each-series-cjs": "^2.2.0",
     "p-eval": "^0.1.0"
   },
   "devDependencies": {
-    "eslint-config-nodejs-pmb": "^0.3.13",
+    "eslint-config-nodejs-pmb": "^0.3.14",
     "eslint-plugin-json-light-pmb": "^1.0.7",
     "eslint-plugin-n": "^17.16.2",
     "lodash.upperfirst": "^4.3.1",
-    "p-fatal": "^0.1.5",
+    "p-fatal": "^0.1.6",
     "rot-13": "^1.0.0"
   },
 
 
-  "npm vs. BOM = Unexpected token": "-*- coding: UTF-8 -*-"
+  "engines": { "npm": ">=7.0.0", "node": ">=16.0.0" }
 }
