@@ -16,11 +16,20 @@ jobs:
   job_ci:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version:
+          - 16
+          - 18
+          - 20
+          - 24
+
     steps:
       - uses: actions/checkout@v6
       - uses: mk-pmb/github-ci-util-2405-pmb/act/install@experimental
         with:
-          nodejs_version: 19
+          nodejs_version: ${{ matrix.node-version }}
+
       - run: ghciu npm install .
       - run: ghciu npm link
       - run: ghciu npm test

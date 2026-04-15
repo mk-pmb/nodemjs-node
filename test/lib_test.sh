@@ -9,6 +9,14 @@ function libtest_test_sourced_file () {
     # are in seemingly-random order, which may give confusing results.
     ) )
   local FUNC= EXPECTED= ACTUAL= FILTERED=
+  local COMPAT_SED='
+    s~^xx(Error) \[ERR_MODULE_NOT_FOUND\](: Cannot find )(module|package|$\
+      )( \S+)( imported from .*|)$~\1:\2module\2~
+    s~^dynamicMap: import failed for: (\S+)$|$\
+      ~&\nError: Cannot find module \x27\1\x27~
+    s~^( +code: \x27)ERR_~\1~
+    /^ +code: \x27/s~\x27$~&,~
+    '
   local N_PASS=0 N_FAIL=0
   for FUNC in "${TODO[@]}"; do
     echo "==== $FUNC ===="
@@ -16,14 +24,17 @@ function libtest_test_sourced_file () {
     ACTUAL="$("$FUNC" 2>&1)"
     FILTERED="$ACTUAL"
     case "${EXPECTED:0:1}" in
-      : ) FILTERED="$(echo "$FILTERED" | grep -xFe "${EXPECTED:1}")";;
+      : )
+        FILTERED="$(echo "$FILTERED" |
+          sed -rf <(echo "$COMPAT_SED") |
+          grep -xFe "${EXPECTED:1}" | uniq)";;
     esac
     if [ "$FILTERED" == "${EXPECTED:1}" ]; then
       echo '+OK'
       (( N_PASS += 1 ))
     else
       diff -sU 9009009 --label expected <(echo "${EXPECTED:1}"
-        ) --label actual <(echo "$ACTUAL")
+        ) --label 'actual | compatibility filter' <(echo "$FILTERED")
       (( N_FAIL += 1 ))
     fi
   done

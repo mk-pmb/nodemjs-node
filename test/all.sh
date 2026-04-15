@@ -10,6 +10,7 @@ function all_tests_cli_init () {
   source -- lib_test.sh || return $?
   cd .. || return $?
   [ -n "$JS_INTERP" ] || JS_INTERP='nodemjs'
+  export ESMODPMB_IGNORE_DEPRECATION_UNTIL="$(date +%y%m%d)"
   libtest_test_sourced_file "$SELFFILE" || return $?
 }
 
