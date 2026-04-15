@@ -1,6 +1,6 @@
 %YAML 1.1
 # ^-- ATTN: [2019-12-31] If you use a later version, Github will fail
-#   with a bogus error message "You have an error in your yaml syntax".
+#     with a bogus error message "You have an error in your yaml syntax".
 # -*- coding: UTF-8, tab-width: 2 -*-
 ---
 
