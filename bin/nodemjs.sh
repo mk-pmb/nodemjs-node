@@ -15,11 +15,23 @@ function nodemjs () {
   #     readlink like on MacOS X or busybox.
   local PKGDIR="$(dirname -- "$(dirname -- "$SELFFILE")")"
 
+  local NODE_VER="$("$NODEJS_CMD" --version)"
+  NODE_VER="${NODE_VER#v}"
+  local NODE_MAJOR_VER="${NODE_VER%%.*}"
+  [ "${NODE_MAJOR_VER:-0}" -ge 1 ] || return 4$(
+    echo E: $FUNCNAME: "Cannot detect --version from $NODEJS_CMD, rv=$?" >&2)
+
   local ARG=
   local EXEC_AS="$0"
   case "$#:$1" in
     1:--report-path=bin ) echo "$SELFFILE"; return $?;;
     1:--report-path=pkg ) echo "$PKGDIR"; return $?;;
+    *:--prefer-nodejs )
+      shift
+      [ "${NODE_MAJOR_VER:-0}" -lt 24 ] ||
+        exec -- "$NODEJS_CMD" "$@" || return 4$(echo E: $FUNCNAME: >&2 \
+          "Failed (rv=$?) to --prefer-nodejs = $NODEJS_CMD")
+      ;;
     *:-a )
       EXEC_AS="$2"
       shift 2;;
